@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Sentiment Analysis</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="logo.png" alt="Climate Sentiment Logo" width="150" height="auto">
+                <h1>Climate Sentiment</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="books.html">Books</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="/signout"><button>Sign Out</button></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="container">
+            <h2>Welcome to Climate Sentiment Analysis</h2>
+            <p>Explore and analyze sentiment related to climate topics from various sources.</p>
+        </section>
+
+        <section id="search-section" class="container">
+            <div class="search-bar-container">
+                <input type="text" id="search-bar" placeholder="Enter climate-related keyword..." aria-label="Search Keyword">
+                <button onclick="searchKeyword()">Search</button>
+            </div>
+
+            <div id="sentiment-overview" class="overview-container">
+                <h2>Sentiment Overview</h2>
+                <div class="chart" id="pie-chart" aria-label="Pie Chart">
+                    <p>Pie Chart</p>
+                </div>
+                <div class="chart" id="trending-topics" aria-label="Trending Topics">
+                    <p>Trending Topics</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="container">
+            <div id="filters" class="filters-container">
+                <h3>Filter Results</h3>
+                <label for="start-date">Date Range:</label>
+                <input type="date" id="start-date"> to <input type="date" id="end-date"><br>
+                <label for="location">Location:</label>
+                <input type="text" id="location" placeholder="Enter location"><br>
+                <label for="sentiment-type">Sentiment Type:</label>
+                <select id="sentiment-type">
+                    <option value="all">All</option>
+                    <option value="positive">Positive</option>
+                    <option value="negative">Negative</option>
+                    <option value="neutral">Neutral</option>
+                </select>
+            </div>
+
+            <div id="visualizations">
+                <h3>Data Visualizations</h3>
+                <div id="bar-chart" class="chart" aria-label="Bar Chart">
+                    <p>Bar Chart Placeholder</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Climate Sentiment Analysis</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
+
