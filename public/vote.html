@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate Change Poll</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #034178; 
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0056b3; 
+            padding: 10px 0;
+            text-align: center;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo img {
+            width: 150px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .poll-container {
+            background: linear-gradient(135deg, #ffffff 0%, #e2e2e2 100%); 
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 30px auto;
+            border: 1px solid #ccc;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        select, button {
+            padding: 12px;
+            width: 100%;
+            border: 1px solid #007bff;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+
+        select:focus, button:focus {
+            border: 1px solid #0056b3;
+            outline: none;
+        }
+
+        button {
+            background-color: #76a5b8; 
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #2a2188; 
+            transform: scale(1.05);
+        }
+
+        #view-results {
+            background-color: #007bff; 
+        }
+
+        #view-results:hover {
+            background-color: #0056b3; 
+        }
+
+        .error {
+            color: #ff0000; 
+            text-align: center;
+        }
+
+        canvas {
+            margin-top: 20px;
+            display: block;
+            max-width: 100%;
+        }
+
+        /* Transition for form elements */
+form {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0; /* Initially hidden */
+    transform: translateY(-20px); /* Slightly moved up */
+}
+
+/* Animation class to trigger appearance */
+form.visible {
+    opacity: 1;
+    transform: translateY(0); /* Move back to original position */
+}
+
+
+
+
+
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Climate Sentiment Logo" width="150" height="auto">
+            <h1>Climate Sentiment</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="news.html">Climate News</a></li>
+                <li><a href="vote.html">Climate Change Opinion Poll</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#dashboard">Dashboard</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="books.html">Books</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<div class="poll-container">
+    <h1>Climate Change Poll</h1>
+    <form id="poll-form">
+        <label for="options">Select an option:</label>
+        <select name="option" id="options" required>
+            <option value="">--Choose an option--</option>
+            <option value="1">I don't believe in Climate change</option>
+            <option value="2">Climate change is real but not a crisis</option>
+            <option value="3">Climate change is a serious threat</option>    
+        </select>
+        <button type="submit">Vote</button>
+    </form>
+    <button id="view-results">View Results</button>
+    <p class="error" id="error-message"></p>
+    <canvas id="resultsChart" width="400" height="400" style="display:none;"></canvas>
+</div>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2024 Climate Sentiment Analysis</p>
+        <button id="dark-mode-toggle">Dark Mode</button>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('poll-form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        const formData = new FormData(this);
+        
+        fetch('http://127.0.0.1:5000/vote', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.status === 'success') {
+                alert('Thank you for voting!');
+                fetchResults(); // Fetch results after voting
+            } else {
+                document.getElementById('error-message').textContent = data.message;
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('error-message').textContent = 'An error occurred while submitting your vote.';
+        });
+    });
+
+    document.getElementById('view-results').addEventListener('click', function() {
+        fetchResults(); // Fetch results without voting
+    });
+
+    function fetchResults() {
+        fetch('http://127.0.0.1:5000/results')
+        .then(response => response.json())
+        .then(data => {
+            displayResults(data);
+        })
+        .catch(error => console.error('Error fetching results:', error));
+    }
+
+    function displayResults(data) {
+        const ctx = document.getElementById('resultsChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: data.options,
+                datasets: [{
+                    label: 'Votes',
+                    data: data.votes,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Voting Results'
+                    }
+                }
+            }
+        });
+        document.getElementById('resultsChart').style.display = 'block'; // Show the chart
+    }
+
+    window.addEventListener('DOMContentLoaded', (event) => {
+    const form = document.getElementById('poll-form');
+    form.classList.add('visible'); // Add class to make form visible with animation
+});
+
+</script>
+<script src="script.js"></script>
+</body>
+</html>

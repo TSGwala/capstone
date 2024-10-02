@@ -12,6 +12,45 @@
 </head>
 
 <body>
+    <style>
+        /* General Styles */
+        /* body {
+            font-family: 'Raleway', sans-serif;
+            
+        } */
+
+        /* Container for consistent width */
+        .container {
+            width: 80%;
+            margin: 0 auto;
+                
+        }
+
+        #books {
+            background-color: #e0f7fa;
+            padding: 40px;
+            border-radius: 10px;
+        }
+
+        #books ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        #books ul li {
+            margin: 10px 0;
+        }
+
+        #books ul li a {
+            color: #00796b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #books ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
     <header>
         <div class="container">
             <div class="logo">
@@ -21,11 +60,12 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
+                    <li><a href="news.html">Climate News</a></li>
+                    <li><a href="vote.html">Climate Change Opinion Poll</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="index.html#dashboard">Dashboard</a></li>
                     <li><a href="contact.html">Contact</a></li>
                     <li><a href="books.html">Books</a></li>
-                    <li><a href="/signout"><button>Sign Out</button></a></li>
                 </ul>
             </nav>
         </div>
@@ -36,9 +76,14 @@
             <h2>Climate Book Recommendations</h2>
             <p>Explore our curated list of books on climate change and sustainability.</p>
             <ul>
-                <li><a href="https://www.goodreads.com/book/show/42046112-the-uninhabitable-earth" target="_blank">The Uninhabitable Earth by David Wallace-Wells</a></li>
-                <li><a href="https://www.goodreads.com/book/show/48697.Silent_Spring" target="_blank">Silent Spring by Rachel Carson</a></li>
-                <li><a href="https://www.goodreads.com/book/show/52879085-how-to-avoid-a-climate-disaster" target="_blank">How to Avoid a Climate Disaster by Bill Gates</a></li>
+                <li><a href="https://www.goodreads.com/book/show/42046112-the-uninhabitable-earth" target="_blank">The
+                        Uninhabitable Earth by David Wallace-Wells</a></li>
+                <li><a href="https://www.goodreads.com/book/show/48697.Silent_Spring" target="_blank">Silent Spring by
+                        Rachel Carson</a></li>
+                <li><a href="https://journals.ametsoc.org/view/journals/wcas/wcas-overview.xml" target="_blank">Weather,
+                        Climate, and Society</a></li>
+                <li><a href="https://www.goodreads.com/book/show/52879085-how-to-avoid-a-climate-disaster"
+                        target="_blank">How to Avoid a Climate Disaster by Bill Gates</a></li>
             </ul>
         </section>
     </main>
@@ -46,8 +91,9 @@
     <footer>
         <div class="container">
             <p>&copy; 2024 Climate Sentiment Analysis</p>
+            <button id="dark-mode-toggle">Dark Mode</button>
         </div>
     </footer>
 </body>
-
+<script src="script.js"></script>
 </html>

@@ -9,9 +9,12 @@ body {
     padding: 0;
     height: 100vh;
     width: 100%;
-    background: url('sentiment.jpg') repeat-x; /* Repeat the image horizontally */
-    background-size: cover; /* Cover the entire background */
-    animation: slideBackground 30s linear infinite; /* Apply the sliding animation */
+    background: url('sentiment.jpg') repeat-x;
+    /* Repeat the image horizontally */
+    background-size: cover;
+    /* Cover the entire background */
+    animation: slideBackground 30s linear infinite;
+    /* Apply the sliding animation */
 }
 
 /* Container */
@@ -210,6 +213,7 @@ footer {
         transform: translateY(-100%);
         opacity: 0;
     }
+
     100% {
         transform: translateY(0);
         opacity: 1;
@@ -220,6 +224,7 @@ footer {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -230,6 +235,7 @@ footer {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -241,6 +247,7 @@ footer {
         opacity: 0;
         transform: translateX(-20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -252,6 +259,7 @@ footer {
         opacity: 0;
         transform: translateX(20px);
     }
+
     to {
         opacity: 1;
         transform: translateX(0);
@@ -263,6 +271,7 @@ footer {
         transform: scale(0);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
@@ -273,7 +282,36 @@ footer {
     from {
         background-position: 0 0;
     }
+
     to {
-        background-position: -1000px 0; /* Adjust this value based on the width of the image and the desired speed */
+        background-position: -1000px 0;
+        /* Adjust this value based on the width of the image and the desired speed */
     }
+}
+
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #060a87;
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.dark-mode header,
+.dark-mode footer {
+    background-color: #001a33;
+    /* Muted blue */
+}
+
+.dark-mode nav ul li a {
+    color: #cccccc;
+}
+
+.dark-mode button {
+    background-color: #004080;
+    /* Muted blue button */
+}
+
+.dark-mode button:hover {
+    background-color: #003366;
 }

@@ -56,6 +56,27 @@ def filter_sentiments():
 
     return jsonify(response)
 
+# Initialize poll data
+poll_options = ["I don't believe in Climate change", "I'm undecided", "Climate change is a serious threat"]
+poll_votes = [0, 0, 0]  # Vote counts for each option
+
+@app.route('/vote', methods=['POST'])
+def vote():
+    selected_option = request.form.get('option')
+    if selected_option is None or selected_option not in ['1', '2', '3']:
+        return jsonify({'status': 'error', 'message': 'Invalid option selected.'}), 400
+    
+    # Update the vote count
+    poll_votes[int(selected_option) - 1] += 1
+    return jsonify({'status': 'success'})
+
+@app.route('/results', methods=['GET'])
+def results():
+    return jsonify({
+        'options': poll_options,
+        'votes': poll_votes
+    })
+
 
 if __name__ == '__main__':
     app.run(debug=True)
