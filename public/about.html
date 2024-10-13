@@ -8,15 +8,20 @@
 </head>
 <body>
     <style>
-body {
+ body, html {
         margin: 0;
         padding: 0;
         height: 100%;
-        display: flex;
-        flex-direction: column;
     }
     
-    /* Make sure the header and content section are flexible */
+    /* Body should take full viewport height */
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Full viewport height */
+    }
+
+    /* Header section */
     header {
         background-color: #0077b6;
         color: white;
@@ -25,20 +30,21 @@ body {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
     
+    /* Main content should expand to fill space */
     #about-section {
-        flex: 1; /* Allow the content to grow and take the available space */
+        flex: 1; /* Content will take up available space */
         padding: 20px;
         text-align: center;
     }
-    
+
+    /* Footer section should stay at the bottom */
     footer {
         background-color: #0077b6;
         color: white;
         padding: 10px;
         text-align: center;
-        margin-top: auto; /* Push the footer to the bottom */
     }
-    
+
     /* Flexbox styles for navigation */
     nav ul {
         list-style: none;
@@ -87,7 +93,7 @@ body {
 
     <section id="about-section">
         <h2>About Us</h2>
-        <p>Welcome to the Climate Sentiment Analysis platform. Our mission is to build a tool that can accurately determine the sentiment of tweets related to climate change, categorizing them as positive, negative, or neutral. This will help in understanding public perception and trends regarding climate-related topics.</p>
+        <p>Welcome to the Climate Sentiment Analysis platform. Our mission is to build a tool that accurately determines the sentiment of tweets related to climate change, categorizing them as positive or negative. Positive sentiment indicates support for climate action, policies, or awareness campaigns, while negative sentiment highlights concerns or resistance to these efforts. Understanding these trends is crucial for shaping effective climate communication, addressing public concerns, and reinforcing successful initiatives.</p>
         <p>Our team is passionate about climate change and its impact on the world. Through this platform, we aim to raise awareness and contribute to the global conversation on climate issues.</p>
     </section>
 
