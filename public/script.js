@@ -60,28 +60,7 @@ async function applyFilters() {
     });
 }
 
-// async function fetchTrendingTopics() {
-//     const response = await fetch('http://127.0.0.1:5000/trending-topics');
-//     const data = await response.json();
-//     const trendingTopicsList = document.getElementById('trending-topics-list');
-    
-//     // Clear previous results
-//     trendingTopicsList.innerHTML = '';
 
-//     // Populate the trending topics list
-//     if (data.trending_topics) {
-//         data.trending_topics.forEach(topic => {
-//             const listItem = document.createElement('li');
-//             listItem.textContent = topic;
-//             trendingTopicsList.appendChild(listItem);
-//         });
-//     } else {
-//         trendingTopicsList.innerHTML = '<li>No trending topics found.</li>';
-//     }
-// }
-
-// // Fetch trending topics when the page loads
-// fetchTrendingTopics();
 
 
 // Toggle dark mode functionality

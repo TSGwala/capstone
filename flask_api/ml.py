@@ -213,3 +213,5 @@ cv_scores = cross_val_score(model, X_train_tfidf, y_train, cv=5)  # 5-fold cross
 print(f'Cross-Validation Scores: {cv_scores}')
 print(f'Mean CV Accuracy: {cv_scores.mean():.2f}')
 
+
+

@@ -10,6 +10,49 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Small Popup Styles */
+        .popup {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            bottom: 20px; /* Distance from the bottom */
+            right: 20px; /* Distance from the right */
+            background-color: #fff;
+            border: 2px solid #007bff;
+            border-radius: 10px; /* Rounded corners */
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center; /* Center text */
+            width: 250px; /* Fixed width */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        button {
+            background-color: #007bff; /* Bootstrap primary color */
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3; /* Darken on hover */
+        }
+    </style>
 </head>
 
 <body>
@@ -23,6 +66,7 @@
             <nav>
                 <ul>
                     <li><a href="#home">Home</a></li>
+                    <li><a href="results.html">Real News sentiments</a></li>
                     <li><a href="news.html">Climate News</a></li>
                     <li><a href="vote.html">Climate Change Opinion Poll</a></li>
                     <li><a href="about.html">About</a></li>
@@ -76,7 +120,7 @@
                 <button onclick="applyFilters()">Apply Filters</button>
             </div>
             
-            <canvas id="barChart" width="400" height="400"></canvas>
+            <canvas id="barChart" width="400" height="200"></canvas>
         </section>
     </main>
 
@@ -86,6 +130,14 @@
             <button id="dark-mode-toggle">Dark Mode</button>
         </div>
     </footer>
+
+    <!-- Small Popup HTML -->
+    <div id="votePopup" class="popup">
+        <span class="close">&times;</span>
+        <h3>🌍 Join the Conversation! 🌍</h3>
+        <p>Your voice matters!</p>
+        <button id="voteButton">Vote Now!</button>
+    </div>
 
     <script src="script.js"></script>
 
@@ -110,15 +162,14 @@
         const pieChart = new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: ['Positive',  'Negative'],
+                labels: ['Positive', 'Negative'],
                 datasets: [{
                     label: 'Sentiment Distribution',
                     data: [
                         dataset.sentiment.positive,
-                       
                         dataset.sentiment.negative
                     ],
-                    backgroundColor: ['#4CAF50',  '#F44336'],
+                    backgroundColor: ['#4CAF50', '#F44336'],
                     borderWidth: 1
                 }]
             },
@@ -143,6 +194,38 @@
             listItem.textContent = topic;
             trendingTopicsContainer.appendChild(listItem);
         });
+
+        // Show the popup when the page loads
+        window.onload = function() {
+            document.getElementById('votePopup').style.display = 'block';
+        };
+
+        // Get the popup
+        var popup = document.getElementById("votePopup");
+
+        // Get the <span> element that closes the popup
+        var span = document.getElementsByClassName("close")[0];
+
+        // Get the vote button
+        var voteButton = document.getElementById('voteButton');
+
+        // When the user clicks on the close button <span>, close the popup
+        span.onclick = function() {
+            popup.style.display = "none";
+        }
+
+        // When the user clicks on the vote button, redirect to the voting page
+        voteButton.onclick = function() {
+            window.location.href = 'vote.html'; // Adjust the URL to your voting page
+            popup.style.display = "none"; // Close the popup after clicking the button
+        }
+
+        // When the user clicks anywhere outside of the popup, close it
+        window.onclick = function(event) {
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+        }
     </script>
 </body>
 
