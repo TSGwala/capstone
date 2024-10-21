@@ -8,7 +8,7 @@ async function searchKeyword() {
 
     try {
         
-        const response = await fetch('http://127.0.0.1:5000/predict', {
+        const response = await fetch('https://capstone-3-omek.onrender.com/predict', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ async function applyFilters() {
     }
 
     // Fetch the filtered data from the Flask API
-    const response = await fetch(`http://localhost:5000/filter-sentiments${queryString}`);
+    const response = await fetch(`https://capstone-3-omek.onrender.com/filter-sentiments${queryString}`);
     const data = await response.json();
 
     // Update the bar chart with the filtered data
@@ -103,14 +103,14 @@ async function submitPoll() {
 
     if (selectedOption) {
         // Send vote to the backend
-        await fetch('http://localhost:5000/vote', {
+        await fetch('https://capstone-3-omek.onrender.com/vote', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ option: selectedOption })
         });
 
         // Fetch the updated results from the backend
-        const response = await fetch('http://localhost:5000/results');
+        const response = await fetch('https://capstone-3-omek.onrender.com/results');
         const data = await response.json();
         pollVotes = data.votes;
         totalVotes = pollVotes.reduce((a, b) => a + b, 0);
