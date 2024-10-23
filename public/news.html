@@ -163,7 +163,7 @@
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sentiment@5.1.0/build/sentiment.min.js"></script>
 
-
+<!-- 
      <script>
         const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; 
         const newsUrl = `https://newsapi.org/v2/everything?q=climate&apiKey=${newsApiKey}`;
@@ -204,9 +204,61 @@
         closeNewsBtn.addEventListener('click', () => {
             newsSection.style.display = 'none';
         });
-    </script> 
+    </script>  -->
 
- 
+    <script>
+        const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; 
+        const newsUrl = `https://newsapi.org/v2/everything?q=climate&apiKey=${newsApiKey}`;
+        const newsSection = document.getElementById('news-section');
+        const newsList = document.getElementById('news-articles');
+        const showNewsBtn = document.getElementById('show-news');
+        const closeNewsBtn = document.getElementById('close-news');
+    
+        // Function to fetch news
+        async function fetchNews() {
+            try {
+                const response = await fetch(newsUrl);
+                // Check if the response is OK (status in the range 200-299)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+    
+                // Check if the data has articles
+                if (data.articles && Array.isArray(data.articles) && data.articles.length > 0) {
+                    newsList.innerHTML = '<h3>Latest Articles</h3>';
+                    data.articles.forEach(article => {
+                        const articleElement = document.createElement('div');
+                        articleElement.innerHTML = `
+                            <h4><a href="${article.url}" target="_blank">${article.title}</a></h4>
+                            <p>${article.description || 'No description available.'}</p>
+                            <small>Source: ${article.source.name}</small>
+                            <hr>
+                        `;
+                        newsList.appendChild(articleElement);
+                    });
+                } else {
+                    newsList.innerHTML = '<p>No articles found.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
+            }
+        }
+    
+        // Show news section and fetch news on button click
+        showNewsBtn.addEventListener('click', () => {
+            newsSection.style.display = 'block';
+            fetchNews();
+        });
+    
+        // Close the news section
+        closeNewsBtn.addEventListener('click', () => {
+            newsSection.style.display = 'none';
+        });
+    </script>
+    
 
 
 </body>
