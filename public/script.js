@@ -126,39 +126,24 @@ async function submitPoll() {
 
 
 async function fetchNews() {
+    console.log('Fetching news from:', newsUrl); // Log the URL being fetched
     try {
         const response = await fetch(newsUrl, {
             method: 'GET',
             headers: {
-                'Accept': 'application/json'
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
             }
         });
 
+        console.log('Response Status:', response.status); // Log the response status
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
         }
 
         const data = await response.json();
-
-        if (data.articles && Array.isArray(data.articles)) {
-            newsList.innerHTML = '<h3>Latest Articles</h3>';
-            if (data.articles.length > 0) {
-                data.articles.forEach(article => {
-                    const articleElement = document.createElement('div');
-                    articleElement.innerHTML = `
-                        <h4><a href="${article.url}" target="_blank">${article.title}</a></h4>
-                        <p>${article.description || 'No description available.'}</p>
-                        <small>Source: ${article.source.name}</small>
-                        <hr>
-                    `;
-                    newsList.appendChild(articleElement);
-                });
-            } else {
-                newsList.innerHTML = '<p>No articles found.</p>';
-            }
-        } else {
-            newsList.innerHTML = '<p>Error: No articles data received.</p>';
-        }
+        console.log('Fetched Data:', data); // Log the data fetched
+        // ... (rest of your processing logic)
     } catch (error) {
         console.error('Error fetching news:', error);
         newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
