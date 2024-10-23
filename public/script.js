@@ -1,3 +1,5 @@
+
+
 async function searchKeyword() {
     const keyword = document.getElementById('search-bar').value;
 
@@ -7,7 +9,6 @@ async function searchKeyword() {
     }
 
     try {
-        
         const response = await fetch('https://capstone-3-omek.onrender.com/predict', {
             method: 'POST',
             headers: {
@@ -18,10 +19,11 @@ async function searchKeyword() {
 
         const data = await response.json();
 
-        
         const sentimentOutput = document.getElementById('sentiment-output');
         if (data.error) {
             sentimentOutput.textContent = `Error: ${data.error}`;
+        } else if (data.sentiment === undefined) {
+            sentimentOutput.textContent = 'Sorry, this is not a climate-related keyword.';
         } else {
             sentimentOutput.textContent = `Sentiment: ${data.sentiment}`;
         }
@@ -30,6 +32,7 @@ async function searchKeyword() {
         document.getElementById('sentiment-output').textContent = 'An error occurred while processing the request.';
     }
 }
+
 
 async function applyFilters() {
     // Get the selected sentiment filter value
