@@ -1,4 +1,4 @@
-
+<!-- 
 
  <!DOCTYPE html>
 <html lang="en">
@@ -171,6 +171,242 @@
     <script>
         const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; // Replace with your actual API key
         const newsUrl = `https://newsapi.org/v2/everything?q=climate&apiKey=${newsApiKey}`;
+        const newsSection = document.getElementById('news-section');
+        const newsList = document.getElementById('news-articles');
+        const showNewsBtn = document.getElementById('show-news');
+        const closeNewsBtn = document.getElementById('close-news');
+
+        // Function to fetch news
+        async function fetchNews() {
+            newsList.innerHTML = '<p>Loading news articles...</p>'; // Show loading text
+            try {
+                const response = await fetch(newsUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    const errorMessage = await response.text(); // Get detailed error message
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorMessage}`);
+                }
+
+                const data = await response.json();
+
+                if (data.articles && Array.isArray(data.articles)) {
+                    newsList.innerHTML = '<h3>Latest Articles</h3>';
+                    if (data.articles.length > 0) {
+                        data.articles.forEach(article => {
+                            const articleElement = document.createElement('div');
+                            articleElement.innerHTML = `
+                                <h4><a href="${article.url}" target="_blank">${article.title}</a></h4>
+                                <p>${article.description || 'No description available.'}</p>
+                                <small>Source: ${article.source.name}</small>
+                                <hr>
+                            `;
+                            newsList.appendChild(articleElement);
+                        });
+                    } else {
+                        newsList.innerHTML = '<p>No articles found.</p>';
+                    }
+                } else {
+                    newsList.innerHTML = '<p>Error: No articles data received.</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
+            }
+        }
+
+        // Show news section and fetch news on button click
+        showNewsBtn.addEventListener('click', () => {
+            newsSection.style.display = 'block';
+            fetchNews(); // Fetch news when the section is displayed
+        });
+
+        // Close the news section
+        closeNewsBtn.addEventListener('click', () => {
+            newsSection.style.display = 'none';
+            newsList.innerHTML = ''; // Clear the news list when closing
+        });
+    </script>
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Climate News</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0077b6;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        header nav ul li {
+            display: inline;
+            margin: 0 15px;
+        }
+
+        header nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        main {
+            margin-top: 100px;
+            padding: 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            color: #007BFF;
+        }
+
+        .button-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #show-news,
+        #close-news {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #show-news:hover,
+        #close-news:hover {
+            background-color: #0056b3;
+        }
+
+        #news-section {
+            display: none;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #news-articles h4 {
+            margin: 0;
+        }
+
+        #news-articles p {
+            margin: 5px 0;
+        }
+
+        footer {
+            background-color: #0077b6;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        @media screen and (max-width: 768px) {
+            header,
+            footer {
+                padding: 15px;
+            }
+
+            #show-news,
+            #close-news {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Climate News</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="results.html">News Sentiments</a></li>
+                <li><a href="news.html">Climate News</a></li>
+                <li><a href="vote.html">Climate Change Opinion Poll</a></li>
+                <li><a href="books.html">Books</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="index.html#dashboard">Dashboard</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Stay Updated on the Latest Climate News</h2>
+
+        <div class="button-container">
+            <button id="show-news">Show News</button>
+        </div>
+
+        <section id="news-section">
+            <h2>Latest Climate News</h2>
+            <div id="news-articles">
+                <p>Loading news articles...</p>
+            </div>
+            <div class="button-container">
+                <button id="close-news">Close News</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Climate News | Stay informed and stay green</p>
+        <button id="dark-mode-toggle">Dark Mode</button>
+    </footer>
+
+    <script>
+        const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; // Replace with your actual API key
+        const newsUrl = `http://localhost:3000/api/news`; // Use your proxy server URL
         const newsSection = document.getElementById('news-section');
         const newsList = document.getElementById('news-articles');
         const showNewsBtn = document.getElementById('show-news');
