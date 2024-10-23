@@ -150,12 +150,43 @@ async function fetchNews() {
     }
 }
 
-fetch('/news')
+function submitVote(option) {
+    fetch('/vote', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams({ option: option })
+    })
     .then(response => response.json())
     .then(data => {
-        // Display news articles on the frontend
-        console.log(data);
+        if (data.status === 'success') {
+            alert('Vote counted!');
+            fetchResults(); // Refresh results after voting
+        } else {
+            alert(data.message);
+        }
     })
-    .catch(error => {
-        console.error('Error fetching news:', error);
-    });
+    .catch(error => console.error('Error:', error));
+}
+
+function fetchResults() {
+    fetch('/results')
+        .then(response => response.json())
+        .then(data => {
+            console.log('Poll Results:', data);
+            // Update the UI with poll results
+        })
+        .catch(error => console.error('Error fetching results:', error));
+}
+
+function fetchNews() {
+    fetch('/news')
+        .then(response => response.json())
+        .then(data => {
+            console.log('News Articles:', data);
+            // Update the UI with news articles
+        })
+        .catch(error => console.error('Error fetching news:', error));
+}
+
