@@ -102,6 +102,21 @@ def results():
         'votes': poll_votes
     })
 
+import requests
+
+@app.route('/news', methods=['GET'])
+def fetch_news():
+    api_key = 'c6d35e39bce43e9a8d7150e0a7394f6'
+    url = f'https://newsapi.org/v2/everything?q=climate&apiKey={api_key}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        articles = response.json().get('articles', [])
+        return jsonify(articles)
+    else:
+        return jsonify({'error': 'Failed to fetch news'}), 500
+
+
+
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)

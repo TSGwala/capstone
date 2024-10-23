@@ -149,3 +149,13 @@ async function fetchNews() {
         newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
     }
 }
+
+fetch('/news')
+    .then(response => response.json())
+    .then(data => {
+        // Display news articles on the frontend
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('Error fetching news:', error);
+    });
