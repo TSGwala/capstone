@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+
+
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -17,7 +19,7 @@
         }
 
         header {
-            background-color:#0077b6;
+            background-color: #0077b6;
             color: #fff;
             padding: 20px 0;
             text-align: center;
@@ -64,7 +66,8 @@
             margin-bottom: 20px;
         }
 
-        #show-news, #close-news {
+        #show-news,
+        #close-news {
             background-color: #007BFF;
             color: white;
             padding: 10px 20px;
@@ -74,7 +77,8 @@
             font-size: 16px;
         }
 
-        #show-news:hover, #close-news:hover {
+        #show-news:hover,
+        #close-news:hover {
             background-color: #0056b3;
         }
 
@@ -110,10 +114,13 @@
         }
 
         @media screen and (max-width: 768px) {
-            header, footer {
+            header,
+            footer {
                 padding: 15px;
             }
-            #show-news, #close-news {
+
+            #show-news,
+            #close-news {
                 width: 90%;
             }
         }
@@ -127,17 +134,17 @@
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="results.html">News sentiments</a></li>
-                <li><a href="news.html">Climate News</a></li> 
+                <li><a href="results.html">News Sentiments</a></li>
+                <li><a href="news.html">Climate News</a></li>
                 <li><a href="vote.html">Climate Change Opinion Poll</a></li>
                 <li><a href="books.html">Books</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="index.html#dashboard">Dashboard</a></li>
-                <li><a href="contact.html">Contact</a></li> 
+                <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
     </header>
- 
+
     <main>
         <h2>Stay Updated on the Latest Climate News</h2>
 
@@ -160,51 +167,6 @@
         <p>&copy; 2024 Climate News | Stay informed and stay green</p>
         <button id="dark-mode-toggle">Dark Mode</button>
     </footer>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sentiment@5.1.0/build/sentiment.min.js"></script>
-
-<!-- 
-     <script>
-        const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; 
-        const newsUrl = `https://newsapi.org/v2/everything?q=climate&apiKey=${newsApiKey}`;
-        const newsSection = document.getElementById('news-section');
-        const newsList = document.getElementById('news-articles');
-        const showNewsBtn = document.getElementById('show-news');
-        const closeNewsBtn = document.getElementById('close-news');
-
-        // Function to fetch news
-        async function fetchNews() {
-            try {
-                const response = await fetch(newsUrl);
-                const data = await response.json();
-                newsList.innerHTML = '<h3>Latest Articles</h3>';
-                data.articles.forEach(article => {
-                    const articleElement = document.createElement('div');
-                    articleElement.innerHTML = `
-                        <h4><a href="${article.url}" target="_blank">${article.title}</a></h4>
-                        <p>${article.description}</p>
-                        <small>Source: ${article.source.name}</small>
-                        <hr>
-                    `;
-                    newsList.appendChild(articleElement);
-                });
-            } catch (error) {
-                console.error('Error fetching news:', error);
-                newsList.innerHTML = '<p>Error loading news.</p>';
-            }
-        }
-
-        // Show news section and fetch news on button click
-        showNewsBtn.addEventListener('click', () => {
-            newsSection.style.display = 'block';
-            fetchNews();
-        });
-
-        // Close the news section
-        closeNewsBtn.addEventListener('click', () => {
-            newsSection.style.display = 'none';
-        });
-    </script>  -->
 
     <script>
         const newsApiKey = '6c6d35e39bce43e9a8d7150e0a7394f6'; // Replace with your actual API key
@@ -213,9 +175,10 @@
         const newsList = document.getElementById('news-articles');
         const showNewsBtn = document.getElementById('show-news');
         const closeNewsBtn = document.getElementById('close-news');
-    
+
         // Function to fetch news
         async function fetchNews() {
+            newsList.innerHTML = '<p>Loading news articles...</p>'; // Show loading text
             try {
                 const response = await fetch(newsUrl, {
                     method: 'GET',
@@ -223,15 +186,14 @@
                         'Accept': 'application/json'
                     }
                 });
-    
-                // Check if the response is ok (status 200-299)
+
                 if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status} - ${response.statusText}`);
+                    const errorMessage = await response.text(); // Get detailed error message
+                    throw new Error(`HTTP error! Status: ${response.status} - ${errorMessage}`);
                 }
-    
+
                 const data = await response.json();
-    
-                // Check if articles are available and are in an array
+
                 if (data.articles && Array.isArray(data.articles)) {
                     newsList.innerHTML = '<h3>Latest Articles</h3>';
                     if (data.articles.length > 0) {
@@ -256,25 +218,19 @@
                 newsList.innerHTML = `<p>Error loading news: ${error.message}</p>`;
             }
         }
-    
+
         // Show news section and fetch news on button click
         showNewsBtn.addEventListener('click', () => {
             newsSection.style.display = 'block';
             fetchNews(); // Fetch news when the section is displayed
         });
-    
+
         // Close the news section
         closeNewsBtn.addEventListener('click', () => {
             newsSection.style.display = 'none';
             newsList.innerHTML = ''; // Clear the news list when closing
         });
     </script>
-    
-    
-
-
 </body>
 
 </html>
-
-
