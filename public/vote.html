@@ -208,7 +208,7 @@ document.getElementById('poll-form').addEventListener('submit', function (event)
     event.preventDefault(); // Prevent default form submission
     const formData = new FormData(this);
     
-    fetch('http://127.0.0.1:5000/vote', {
+    fetch('https://capstone-3-omek.onrender.com/vote', {
         method: 'POST',
         body: formData
     })
@@ -237,7 +237,7 @@ document.getElementById('view-results').addEventListener('click', function() {
 });
 
 function fetchResults() {
-    fetch('http://127.0.0.1:5000/results')
+    fetch('https://capstone-3-omek.onrender.com/results')
     .then(response => response.json())
     .then(data => {
         displayResults(data);
